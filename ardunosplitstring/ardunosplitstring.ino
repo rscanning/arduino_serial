@@ -1,3 +1,4 @@
+/// the clever bits of this all come from:
 // www.esologic.com/?p=1157
 
 const char EOPmarker = '.'; //This is the end of packet marker
@@ -26,24 +27,38 @@ void loop() {
       else { //once the end of package marker has been read
         serialbuf[bufpos] = 0; //restart the buff
         bufpos = 0; //restart the position of the buff
- 
- //ROB /////////////////////////////////////////////////////////////////
- 
+        
+ //////////////////////////////////////////////////////////////////////////////////////////////
+ // this is where we grab the x y HSB values and do whatever we thing is nice :) //////////////
+        
          int x = atoi(subStr(serialbuf, ":", 1));
          int y = atoi(subStr(serialbuf, ":", 2));
-         int H = atoi(subStr(serialbuf, ":", 3));
-         int S = atoi(subStr(serialbuf, ":", 4));
+         int R = atoi(subStr(serialbuf, ":", 3));
+         int G = atoi(subStr(serialbuf, ":", 4));
+         int B = atoi(subStr(serialbuf, ":", 5));
 
-         Serial.write(S);
-          
-          if(S >= 50){
+         // send back to processing for debugging 
+        
+         Serial.write(B);
+          // quick and dirty LED tester
+          if(B >= 50){
             digitalWrite(13,HIGH);
           } else digitalWrite(13,LOW);
-  
- 
+          
+          
+          
+          
+          
+          
+          
+          
+      // all our stuff goes above here /////////////////////////////////////////////////
       }
     }
 }
+
+
+// this is the function that allows us to easily grab an item from the string by index
 
 char* subStr (char* input_string, char *separator, int segment_number) {
   char *act, *sub, *ptr;
